@@ -1,0 +1,14 @@
+{
+  "accounts": [
+    {
+      "id": "92a5110c-208c-4da1-9fa0-64280b323713",
+      "firstName": "Owen",
+      "lastName": "Carruth",
+      "email": "ocarr199@gmail.com",
+      "password": "1234"
+    }
+  ],
+  "events": [
+    { "id": 1, "body": "some comment", "postId": 1 }
+  ]
+}
