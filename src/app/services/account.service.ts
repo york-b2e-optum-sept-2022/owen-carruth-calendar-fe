@@ -11,7 +11,7 @@ import { v4 as uuidv4 } from 'uuid';
 })
 export class AccountService {
 
-  $isRegistering = new BehaviorSubject<boolean>(false);
+  // $isRegistering = new BehaviorSubject<boolean>(false);
   $registerError = new Subject<string>();
   $loginError = new Subject<string>();
   $account = new BehaviorSubject<IAccount | null>(null);

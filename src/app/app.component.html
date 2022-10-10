@@ -1,6 +1,3 @@
 <app-nav></app-nav>
-<div *ngIf="!isLoggedIn">
-  <app-login *ngIf="!isRegistering"></app-login>
-  <app-register *ngIf="isRegistering"></app-register>
-</div>
-
+<router-outlet>
+</router-outlet>

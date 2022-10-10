@@ -20,6 +20,13 @@
       "lastName": "buxton",
       "email": "byron@twins.com",
       "password": "twins"
+    },
+    {
+      "id": "1477a8e8-58ce-47df-b020-530c67c6af20",
+      "firstName": "owen",
+      "lastName": "carruth",
+      "email": "ocarr199@gmail.com",
+      "password": "qwer"
     }
   ],
   "events": [

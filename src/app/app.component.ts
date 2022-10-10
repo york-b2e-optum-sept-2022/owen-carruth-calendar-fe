@@ -18,10 +18,6 @@ export class AppComponent {
     this.accountService.$account.pipe(takeUntil(this.$componentDestroyed)).subscribe({
       next: account => this.isLoggedIn = !!account
     })
-    this.accountService.$isRegistering.pipe(takeUntil(this.$componentDestroyed)).subscribe({
-      next: isRegistering => this.isRegistering = isRegistering
-    })
-
   }
 
   ngOnDestroy() {
