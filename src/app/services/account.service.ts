@@ -1,14 +1,18 @@
 import { Injectable } from '@angular/core';
 import {ILoginForm} from "../interfaces/ILoginForm";
-import {BehaviorSubject, Subject} from "rxjs";
+import {BehaviorSubject, first, Subject} from "rxjs";
 import {HttpService} from "./http.service";
 import {IAccount} from "../interfaces/IAccount";
+import {IRegisterForm} from "../interfaces/IRegisterForm";
+import { v4 as uuidv4 } from 'uuid';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AccountService {
 
+  $isRegistering = new BehaviorSubject<boolean>(false);
+  $registerError = new Subject<string>();
   $loginError = new Subject<string>();
   $account = new BehaviorSubject<IAccount | null>(null);
   constructor(private httpService: HttpService) { }
@@ -60,5 +64,55 @@ export class AccountService {
 
 
 
+  }
+
+  register(registrationData: IRegisterForm) {
+    console.log(registrationData)
+    if (registrationData.firstName.length < 1){
+      this.$registerError.next("Please enter a first name");
+
+      return;
+    }
+    if (registrationData.lastName.length < 1){
+      this.$registerError.next("Please enter a last name");
+      return;
+    }
+    const isEmailValid = this.validateEmail(registrationData.email)
+    if(!isEmailValid){
+      this.$registerError.next('please enter a valid email');
+      return;
+    }
+    if (registrationData.password.length < 1){
+      this.$registerError.next("Please enter a password")
+      return;
+    }
+    if (registrationData.password !== registrationData.confirmPassword){
+      this.$registerError.next("Passwords do not match")
+      return
+    }
+
+    this.httpService.findAccountByEmail(registrationData.email).subscribe({
+      next: accountList => {
+        if(accountList.length > 0){
+          this.$registerError.next("Account with that email already exists")
+          return
+        }
+      },  error: (err) => {
+        console.error(err);
+        this.$registerError.next("Unable to Register, try again later")
+      }
+    })
+
+    this.httpService.register({
+      id: uuidv4(),
+      firstName: registrationData.firstName,
+      lastName: registrationData.lastName,
+      email: registrationData.email,
+      password: registrationData.password
+    }
+    ).pipe(first())
+      .subscribe({
+        next: newAccount => this.$account.next(newAccount)
+      })
   }
 }

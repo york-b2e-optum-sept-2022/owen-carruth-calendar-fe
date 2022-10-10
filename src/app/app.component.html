@@ -1,4 +1,6 @@
 <app-nav></app-nav>
-<app-login
-  *ngIf="!isLoggedIn"
-></app-login>
+<div *ngIf="!isLoggedIn">
+  <app-login *ngIf="!isRegistering"></app-login>
+  <app-register *ngIf="isRegistering"></app-register>
+</div>
+

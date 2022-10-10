@@ -6,9 +6,27 @@
       "lastName": "Carruth",
       "email": "ocarr199@gmail.com",
       "password": "1234"
+    },
+    {
+      "id": "f202ffa6-cbbb-47d2-a2e9-096b2455d005",
+      "firstName": "byron",
+      "lastName": "buxton",
+      "email": "byron@twins.com",
+      "password": "twins"
+    },
+    {
+      "id": "4099d93a-ec1f-4b86-8a1a-8b658901c8c6",
+      "firstName": "byron",
+      "lastName": "buxton",
+      "email": "byron@twins.com",
+      "password": "twins"
     }
   ],
   "events": [
-    { "id": 1, "body": "some comment", "postId": 1 }
+    {
+      "id": 1,
+      "body": "some comment",
+      "postId": 1
+    }
   ]
 }

@@ -12,7 +12,7 @@ export class LoginComponent implements OnInit {
  loginError: string | null = null;
 
   constructor(private accountService: AccountService) {
-      this.accountService.$loginError.subscribe({
+      this.accountService.$loginError.pipe().subscribe({
         next: loginError => this.loginError = loginError
       })
   }
@@ -20,9 +20,17 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  ngOnDestroy() {
+
+  }
+
   onLogin(loginCreds: ILoginForm) {
 
     console.log(loginCreds)
     this.accountService.login(loginCreds)
+  }
+
+  goToRegister() {
+    this.accountService.$isRegistering.next(true);
   }
 }

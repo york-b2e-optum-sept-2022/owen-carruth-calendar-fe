@@ -12,17 +12,22 @@ export class AppComponent {
 
   isLoggedIn: boolean = false;
   $componentDestroyed: Subject<boolean> = new Subject()
+  isRegistering: boolean = false;
 
   constructor(private accountService: AccountService) {
     this.accountService.$account.pipe(takeUntil(this.$componentDestroyed)).subscribe({
       next: account => this.isLoggedIn = !!account
     })
-    console.log(this.isLoggedIn)
+    this.accountService.$isRegistering.pipe(takeUntil(this.$componentDestroyed)).subscribe({
+      next: isRegistering => this.isRegistering = isRegistering
+    })
+
   }
 
   ngOnDestroy() {
     this.$componentDestroyed.next(true)
     this.$componentDestroyed.complete()
+    console.log("destroy")
   }
 }
 

@@ -14,7 +14,9 @@ export class HttpService {
   findAccountByEmail(loginEmail: string) {
     //using query string to get data from /accounts where email = loginEmail, returning as Observable<IAccount> to be able to assign to $account in account service
     return this.httpClient.get(`http://localhost:3000/accounts?email=${loginEmail}`) as Observable<IAccount[]>;
-
   }
 
+  register(registerAccount: IAccount){
+    return this.httpClient.post(`http://localhost:3000/accounts`, registerAccount) as Observable<IAccount>
+  }
 }
