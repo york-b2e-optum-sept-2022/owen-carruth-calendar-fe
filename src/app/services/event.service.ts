@@ -5,7 +5,7 @@ import {IEvent} from "../interfaces/IEvent";
 import {IEventForm} from "../interfaces/IEventForm";
 import {HttpService} from "./http.service";
 import {IAccount} from "../interfaces/IAccount";
-
+import {v4 as uuidv4} from 'uuid'
 @Injectable({
   providedIn: 'root'
 })
@@ -60,6 +60,7 @@ export class EventService {
     //   invitedAccounts: this.invitedAccounts
     // }
     this.httpService.createEvent({
+      id: uuidv4(),
       createdBy: user,
       title: formData.title,
       date: formData.date,
@@ -71,13 +72,23 @@ export class EventService {
     })
   }
 
-  getMyEvents(user: IAccount) {
-    this.httpService.getEvents(user.id).pipe(first()).subscribe({
+  getMyEvents(userID: string) {
+    this.httpService.getEvents(userID).pipe(first()).subscribe({
       next: myEventList =>{
         this.$myEvents.next(myEventList)
       }
 
     })
 
+  }
+
+  deleteEvent(event: IEvent) {
+    console.log(event)
+    this.httpService.deleteEvent(event.id).pipe(first()).subscribe({
+      next: value => { this.getMyEvents(event.createdBy.id)
+
+
+      }
+    })
   }
 }

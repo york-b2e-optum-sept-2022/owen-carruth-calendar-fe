@@ -38,4 +38,8 @@ export class HttpService {
   getEvents(userId: string) {
     return this.httpClient.get(`http://localhost:3000/events?createdBy.id=${userId}`) as Observable<IEvent[]>
   }
+
+  deleteEvent(eventID: string) {
+    return this.httpClient.delete(`http://localhost:3000/events/${eventID}`)
+  }
 }

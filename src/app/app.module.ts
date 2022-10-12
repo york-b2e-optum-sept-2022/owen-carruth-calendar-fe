@@ -15,6 +15,7 @@ import { EventFormComponent } from './components/event-form/event-form.component
     AppComponent,
     routingComponents,
     NavComponent,
+    EventComponent
   ],
     imports: [
         BrowserModule,

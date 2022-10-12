@@ -1,1 +1,13 @@
-<p>event works!</p>
+<div class="card" style="width: 18rem;">
+  <div class="card-body">
+    <h5 class="card-title">{{userEvent.title}}</h5>
+    <div *ngIf="!viewingDetails">
+      <button (click)="viewDetails()" class="btn btn-primary">View Event</button>
+    </div>
+  <div *ngIf="viewingDetails">
+    {{userEvent.description}}
+    <button (click)="deleteEvent()" class="btn btn-danger">Delete Event</button>
+    <button (click)="stopViewingDetails()" class="btn btn-primary">Stop viewing</button>
+  </div>
+  </div>
+</div>

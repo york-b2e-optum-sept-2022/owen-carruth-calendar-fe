@@ -18,7 +18,7 @@ export class EventListComponent implements OnInit {
   account: IAccount | null = null;
   constructor(private accountService: AccountService, private eventService: EventService) {
     this.user = JSON.parse(sessionStorage['user']) as IAccount
-    this.eventService.getMyEvents(this.user)
+    this.eventService.getMyEvents(this.user.id)
 
   }
 
