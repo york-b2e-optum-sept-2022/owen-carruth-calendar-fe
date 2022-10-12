@@ -16,24 +16,100 @@
     },
     {
       "id": "4099d93a-ec1f-4b86-8a1a-8b658901c8c6",
-      "firstName": "byron",
-      "lastName": "buxton",
-      "email": "byron@twins.com",
-      "password": "twins"
-    },
-    {
-      "id": "1477a8e8-58ce-47df-b020-530c67c6af20",
-      "firstName": "owen",
-      "lastName": "carruth",
-      "email": "ocarr199@gmail.com",
-      "password": "qwer"
+      "firstName": "Dan",
+      "lastName": "Danielson",
+      "email": "dan@twins.com",
+      "password": "dan"
     }
   ],
   "events": [
     {
-      "id": 1,
-      "body": "some comment",
-      "postId": 1
+      "id": "1234",
+      "title": "WOOO",
+      "date": "05/10/2020",
+      "description": "some comment",
+      "invitedList": []
+    },
+    {
+      "title": "sdfg",
+      "date": "2022-10-03",
+      "description": "sdfg",
+      "invitedAccounts": [
+        {
+          "id": "4099d93a-ec1f-4b86-8a1a-8b658901c8c6",
+          "firstName": "Dan",
+          "lastName": "Danielson",
+          "email": "dan@twins.com",
+          "password": "dan"
+        }
+      ],
+      "id": "vtNgb7L"
+    },
+    {
+      "title": "dfg",
+      "date": "2022-10-22",
+      "description": "dfgfshfghfgs",
+      "invitedAccounts": [
+        {
+          "id": "f202ffa6-cbbb-47d2-a2e9-096b2455d005",
+          "firstName": "byron",
+          "lastName": "buxton",
+          "email": "byron@twins.com",
+          "password": "twins"
+        }
+      ],
+      "id": "a08NvT8"
+    },
+    {
+      "title": "gsfdsdfgdfsdfgssdfgdsfgsdf",
+      "date": "2022-10-29",
+      "description": "sdfdfgsgdsfdfsgdsfg",
+      "invitedAccounts": [
+        {
+          "id": "f202ffa6-cbbb-47d2-a2e9-096b2455d005",
+          "firstName": "byron",
+          "lastName": "buxton",
+          "email": "byron@twins.com",
+          "password": "twins"
+        }
+      ],
+      "id": "JPGjSoI"
+    },
+    {
+      "createdBy": {
+        "id": "92a5110c-208c-4da1-9fa0-64280b323713",
+        "firstName": "Owen",
+        "lastName": "Carruth",
+        "email": "ocarr199@gmail.com",
+        "password": "1234"
+      },
+      "title": "pool party",
+      "date": "2022-10-14",
+      "description": "at 6pm",
+      "invitedAccounts": [
+        {
+          "id": "4099d93a-ec1f-4b86-8a1a-8b658901c8c6",
+          "firstName": "Dan",
+          "lastName": "Danielson",
+          "email": "dan@twins.com",
+          "password": "dan"
+        }
+      ],
+      "id": "5aLuIkr"
+    },
+    {
+      "createdBy": {
+        "id": "92a5110c-208c-4da1-9fa0-64280b323713",
+        "firstName": "Owen",
+        "lastName": "Carruth",
+        "email": "ocarr199@gmail.com",
+        "password": "1234"
+      },
+      "title": "pizza ",
+      "date": "2022-10-17",
+      "description": "davanis",
+      "invitedAccounts": [],
+      "id": "5QbLxNM"
     }
   ]
 }

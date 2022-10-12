@@ -1,20 +1,20 @@
 import { Injectable } from '@angular/core';
 import {ILoginForm} from "../interfaces/ILoginForm";
-import {BehaviorSubject, first, Subject} from "rxjs";
+import {BehaviorSubject, first, ReplaySubject, Subject} from "rxjs";
 import {HttpService} from "./http.service";
 import {IAccount} from "../interfaces/IAccount";
-import {IRegisterForm} from "../interfaces/IRegisterForm";
+import {IRegisterForm} from "../interfaces/IRegisterForm"
 import { v4 as uuidv4 } from 'uuid';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AccountService {
-
-  // $isRegistering = new BehaviorSubject<boolean>(false);
+  $inviteList = new Subject<IAccount[]>();
   $registerError = new Subject<string>();
   $loginError = new Subject<string>();
-  $account = new BehaviorSubject<IAccount | null>(null);
+  $account = new ReplaySubject<IAccount>;
+  // account: IAccount | null = JSON.parse(sessionStorage['user']) as IAccount;
   constructor(private httpService: HttpService) { }
 
   //TODO - figure out how this regex works
@@ -43,7 +43,7 @@ export class AccountService {
       return
     }
 
-    this.httpService.findAccountByEmail(loginCreds.email).subscribe({
+    this.httpService.findAccountByEmail(loginCreds.email).pipe(first()).subscribe({
       next: returnedAccounts => {
         const validAccount = returnedAccounts.find(
           account => account.password === loginCreds.password
@@ -54,6 +54,7 @@ export class AccountService {
         }
        localStorage.setItem("account", `${validAccount}`)
         const acc = localStorage.getItem('account')
+        sessionStorage.setItem('user', JSON.stringify(validAccount))
         this.$account.next(validAccount);
       },
       error: (err) => {
@@ -62,8 +63,16 @@ export class AccountService {
       }
     })
 
+  }
 
-
+  getAccounts(user: IAccount){
+    console.log(user)
+    this.httpService.getAccounts(user.email).subscribe({
+      next: accountList => {
+        console.log(accountList)
+        this.$inviteList.next(accountList);
+      }
+    })
   }
 
   register(registrationData: IRegisterForm) {

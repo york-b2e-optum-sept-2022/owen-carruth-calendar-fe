@@ -7,15 +7,14 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NavComponent } from './components/nav/nav.component';
 import { EventComponent } from './components/event/event.component';
 import { EventListComponent } from './components/event-list/event-list.component';
-import {AppRoutingModule, routingComponents} from './app-routing.module'
+import {AppRoutingModule, routingComponents} from './app-routing.module';
+import { EventFormComponent } from './components/event-form/event-form.component'
 
 @NgModule({
   declarations: [
     AppComponent,
     routingComponents,
     NavComponent,
-    EventComponent,
-    EventListComponent
   ],
     imports: [
         BrowserModule,

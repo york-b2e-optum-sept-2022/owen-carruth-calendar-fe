@@ -20,6 +20,7 @@ export class RegisterComponent implements OnInit {
     this.accountService.$registerError.pipe(takeUntil(this.$componentDestroyed)).subscribe({
       next: registerError => this.registerError = registerError
     })
+
   }
 
   ngOnInit(): void {

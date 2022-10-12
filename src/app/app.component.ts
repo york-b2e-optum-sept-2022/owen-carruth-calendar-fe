@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import {AccountService} from "./services/account.service";
-import {Subject, takeUntil} from "rxjs";
+import {first, Subject, takeUntil} from "rxjs";
+import {IAccount} from "./interfaces/IAccount";
 
 @Component({
   selector: 'app-root',
@@ -10,14 +11,14 @@ import {Subject, takeUntil} from "rxjs";
 export class AppComponent {
   title = 'owen-carruth-calendar-fe';
 
-  isLoggedIn: boolean = false;
   $componentDestroyed: Subject<boolean> = new Subject()
-  isRegistering: boolean = false;
+
 
   constructor(private accountService: AccountService) {
-    this.accountService.$account.pipe(takeUntil(this.$componentDestroyed)).subscribe({
-      next: account => this.isLoggedIn = !!account
-    })
+
+  }
+  ngOnInit(){
+
   }
 
   ngOnDestroy() {

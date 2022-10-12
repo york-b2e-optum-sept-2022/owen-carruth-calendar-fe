@@ -3,7 +3,7 @@ import {ILoginForm} from "../../interfaces/ILoginForm";
 import {NgForm} from "@angular/forms";
 import {AccountService} from "../../services/account.service";
 import {Router} from "@angular/router";
-import {Subject, takeUntil} from "rxjs";
+import {first, Subject, takeUntil} from "rxjs";
 
 //TODO - add error handlers and unsubscribe from observables
 
@@ -25,6 +25,7 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
   }
 
   ngOnDestroy() {
@@ -36,8 +37,9 @@ export class LoginComponent implements OnInit {
     console.log(loginCreds)
     this.accountService.login(loginCreds)
 
-    this.accountService.$account.pipe(takeUntil(this.$componentDestroyed)).subscribe({
+    this.accountService.$account.pipe(first()).subscribe({
       next: account => {
+        console.log(account)
         this.loginSuccess = !!account
         if(this.loginSuccess){
           this.router.navigate(['/events'])
