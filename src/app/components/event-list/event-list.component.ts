@@ -13,17 +13,20 @@ import {IEvent} from "../../interfaces/IEvent";
 export class EventListComponent implements OnInit {
 
   user: IAccount;
-  myEvents: IEvent[]
+  myEvents: IEvent[] = [];
   $componentDestroyed: Subject<boolean> = new Subject()
   account: IAccount | null = null;
   constructor(private accountService: AccountService, private eventService: EventService) {
     this.user = JSON.parse(sessionStorage['user']) as IAccount
-    this.myEvents = this.eventService.myEvents
-    console.log(this.user)
+    this.eventService.getMyEvents(this.user)
+
   }
 
   ngOnInit(): void {
-   this.eventService.getMyEvents(this.user)
+    this.eventService.$myEvents.pipe(takeUntil(this.$componentDestroyed)).subscribe({
+      next: value => this.myEvents = value
+    })
+
   }
 
   ngOnDestroy(){

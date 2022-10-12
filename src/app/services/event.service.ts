@@ -14,7 +14,7 @@ export class EventService {
   $invitedEmails = new Subject<string[]>();
   invitedEmails: string[] = [];
   $eventCreated = new Subject<IEvent>();
-  myEvents: IEvent[] = [];
+  $myEvents = new Subject<IEvent[]>();
   constructor(private httpService: HttpService) { }
 
   createInviteList(selected: Event) {
@@ -73,7 +73,10 @@ export class EventService {
 
   getMyEvents(user: IAccount) {
     this.httpService.getEvents(user.id).pipe(first()).subscribe({
-      next: myEventList => this.myEvents = myEventList
+      next: myEventList =>{
+        this.$myEvents.next(myEventList)
+      }
+
     })
 
   }
