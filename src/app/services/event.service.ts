@@ -23,6 +23,8 @@ export class EventService {
   $eventCreated = new Subject<IEvent>();
   $myEvents = new Subject<IEvent[]>();
 
+  $myInvites = new Subject<IEvent[]>();
+
 
   constructor(private httpService: HttpService, private accountService: AccountService) { }
 
@@ -62,12 +64,6 @@ export class EventService {
   createEvent(formData: IEventForm, user: IAccount) {
 
     console.log(this.invitedAccounts)
-    // const newEvent = {
-    //  title: formData.title,
-    //   date: formData.date,
-    //   description: formData.description,
-    //   invitedAccounts: this.invitedAccounts
-    // }
     this.httpService.createEvent({
       id: uuidv4(),
       createdBy: user,
@@ -144,6 +140,16 @@ export class EventService {
   submitEdit(userEvent: IEvent) {
     this.httpService.editEvent(userEvent).pipe(first()).subscribe({
         next: value => console.log(value)
+    })
+  }
+
+  getMyInvites(user: IAccount) {
+    this.httpService.getInvites(user).pipe(first()).subscribe({
+      next: events => {
+       const myInvites = events.filter(event => event.invitedAccounts.every(acc => acc.id === user.id))
+        console.log(myInvites)
+        this.$myInvites.next(myInvites)
+      }
     })
   }
 }

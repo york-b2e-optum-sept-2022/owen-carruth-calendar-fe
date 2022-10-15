@@ -8,14 +8,16 @@ import { NavComponent } from './components/nav/nav.component';
 import { EventComponent } from './components/event/event.component';
 import { EventListComponent } from './components/event-list/event-list.component';
 import {AppRoutingModule, routingComponents} from './app-routing.module';
-import { EventFormComponent } from './components/event-form/event-form.component'
+import { EventFormComponent } from './components/event-form/event-form.component';
+import { InvitesComponent } from './components/invites/invites.component'
 
 @NgModule({
   declarations: [
     AppComponent,
     routingComponents,
     NavComponent,
-    EventComponent
+    EventComponent,
+    InvitesComponent
   ],
   imports: [
     BrowserModule,

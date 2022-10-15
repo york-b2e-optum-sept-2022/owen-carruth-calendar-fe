@@ -46,4 +46,8 @@ export class HttpService {
   editEvent(editedEvent: IEvent) {
     return this.httpClient.put(`http://localhost:3000/events/${editedEvent.id}`, editedEvent)
   }
+
+  getInvites(user: IAccount) {
+    return this.httpClient.get(`http://localhost:3000/events?createdBy.id_ne=${user.id}`) as Observable<IEvent[]>
+  }
 }

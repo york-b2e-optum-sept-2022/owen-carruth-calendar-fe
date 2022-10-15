@@ -14,11 +14,13 @@ export class EventListComponent implements OnInit {
 
   user: IAccount;
   myEvents: IEvent[] = [];
+  myInvites: IEvent[] = [];
   $componentDestroyed: Subject<boolean> = new Subject()
   account: IAccount | null = null;
   constructor(private accountService: AccountService, private eventService: EventService) {
     this.user = JSON.parse(sessionStorage['user']) as IAccount
     this.eventService.getMyEvents(this.user.id)
+    this.eventService.getMyInvites(this.user)
 
   }
 
@@ -26,7 +28,33 @@ export class EventListComponent implements OnInit {
     this.eventService.$myEvents.pipe(takeUntil(this.$componentDestroyed)).subscribe({
       next: value => this.myEvents = value
     })
+    this.eventService.$myInvites.pipe(takeUntil(this.$componentDestroyed)).subscribe({
+      next: value => {
+        this.myInvites = value
+        console.log(this.myInvites)
+      }
+    })
+  }
 
+  myEventsDatePicker(startDate: HTMLInputElement, endDate: HTMLInputElement){
+    const start = new Date(startDate.value)
+    const end = new Date(endDate.value)
+    console.log(start)
+    const filteredEvents = this.myEvents.filter(event => {
+      const eventDate = new Date(event.date)
+      return (start < eventDate &&  eventDate < end)
+    })
+    this.myEvents = filteredEvents
+  }
+
+  myInvitesDatePicker(startDate: HTMLInputElement, endDate: HTMLInputElement){
+    const start = new Date(startDate.value)
+    const end = new Date(endDate.value)
+    const filteredEvents = this.myEvents.filter(event => {
+      const eventDate = new Date(event.date)
+      return (start < eventDate &&  eventDate < end)
+    })
+    this.myEvents = filteredEvents
   }
 
   ngOnDestroy(){

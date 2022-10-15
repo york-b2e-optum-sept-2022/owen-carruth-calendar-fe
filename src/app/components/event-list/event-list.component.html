@@ -1,7 +1,27 @@
 <button class="btn btn-primary" routerLink="/NewEvent">New Event</button>
-<app-event
-  *ngFor="let event of myEvents"
-  [userEvent]="event"
->
+<div class="d-flex justify-content-around">
+  <div>
+    <div class="m-2">
+      <input #date1 type="date" placeholder="Start date">
+      <input #date2 type="date" placeholder="End date">
+      <button (click)="myEventsDatePicker(date1, date2)" class="btn btn-primary m-1">Set date range</button>
+    </div>
+
+    <app-event
+      *ngFor="let event of myEvents"
+      [userEvent]="event"
+    >
       {{event.title}}
-</app-event>
+    </app-event>
+  </div>
+
+  <app-invites
+    *ngFor="let invite of myInvites"
+    [invite]="invite"
+  >
+
+  </app-invites>
+</div>
+
+
+
