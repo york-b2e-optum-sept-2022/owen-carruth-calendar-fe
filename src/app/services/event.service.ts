@@ -6,16 +6,25 @@ import {IEventForm} from "../interfaces/IEventForm";
 import {HttpService} from "./http.service";
 import {IAccount} from "../interfaces/IAccount";
 import {v4 as uuidv4} from 'uuid'
+import {AccountService} from "./account.service";
 @Injectable({
   providedIn: 'root'
 })
 export class EventService {
-  invitedAccounts: IAccount[] = []
   $invitedEmails = new Subject<string[]>();
   invitedEmails: string[] = [];
+
+  invitedAccounts: IAccount[] = []
+  $invitedAccounts = new Subject<IAccount[]>();
+
+  otherAccounts: IAccount[] = []
+  $otherAccounts = new Subject<IAccount[]>();
+
   $eventCreated = new Subject<IEvent>();
   $myEvents = new Subject<IEvent[]>();
-  constructor(private httpService: HttpService) { }
+
+
+  constructor(private httpService: HttpService, private accountService: AccountService) { }
 
   createInviteList(selected: Event) {
     const isChecked: boolean =  (selected.target as HTMLInputElement).checked
@@ -89,6 +98,52 @@ export class EventService {
 
 
       }
+    })
+  }
+
+  editEventClick(invitedAccounts: IAccount[]){
+    this.invitedAccounts = invitedAccounts
+    this.accountService.$inviteList.pipe(first()).subscribe({
+      next: accountList => {
+            console.log(invitedAccounts)
+            const otherAccounts = accountList.filter(account => invitedAccounts.every(idk => idk.id !== account.id))
+            this.otherAccounts = otherAccounts
+            this.$otherAccounts.next(otherAccounts)
+      }
+  })
+  }
+
+  editInviteList(selected: MouseEvent) {
+    console.log(this.invitedAccounts)
+    const selectedElement = selected.target as HTMLInputElement
+    if(selectedElement.id === 'notInvited'){
+      this.httpService.findAccountByEmail(selectedElement.value).subscribe({
+        next: account => {
+          console.log(account)
+          this.invitedAccounts.push(account[0])
+          console.log(this.invitedAccounts)
+          this.otherAccounts = this.otherAccounts.filter(otherAccount => otherAccount.id !== account[0].id)
+          console.log(this.otherAccounts)
+          this.$otherAccounts.next(this.otherAccounts)
+        }
+      })
+    }else if (selectedElement.id === 'invited') {
+      console.log(this.invitedAccounts)
+      this.httpService.findAccountByEmail(selectedElement.value).subscribe({
+        next: account => {
+          this.otherAccounts.push(account[0])
+          this.invitedAccounts = this.invitedAccounts.filter(invitedAccount => selectedElement.value !== invitedAccount.email)
+          this.$invitedAccounts.next(this.invitedAccounts)
+        }
+      })
+
+    }
+
+  }
+
+  submitEdit(userEvent: IEvent) {
+    this.httpService.editEvent(userEvent).pipe(first()).subscribe({
+        next: value => console.log(value)
     })
   }
 }

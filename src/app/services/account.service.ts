@@ -14,7 +14,6 @@ export class AccountService {
   $registerError = new Subject<string>();
   $loginError = new Subject<string>();
   $account = new ReplaySubject<IAccount>;
-  // account: IAccount | null = JSON.parse(sessionStorage['user']) as IAccount;
   constructor(private httpService: HttpService) { }
 
   //TODO - figure out how this regex works

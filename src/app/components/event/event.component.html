@@ -5,9 +5,62 @@
       <button (click)="viewDetails()" class="btn btn-primary">View Event</button>
     </div>
   <div *ngIf="viewingDetails">
-    {{userEvent.description}}
-    <button (click)="deleteEvent()" class="btn btn-danger">Delete Event</button>
-    <button (click)="stopViewingDetails()" class="btn btn-primary">Stop viewing</button>
+    <p>{{userEvent.date | date}}</p>
+    <p>{{userEvent.description}}</p>
+    <div *ngFor="let account of userEvent.invitedAccounts">
+      {{account.firstName}}
+    </div>
+<div>
+  <button (click)="deleteEvent()" class="btn btn-danger m-1">Delete</button>
+  <button (click)="editEventClick()" class="btn btn-warning m-1">Edit</button>
+
+  <div class="modal" tabindex="-1" role="dialog"  [ngStyle]="{'display':display}">
+    <form [formGroup]="editForm" (ngSubmit)="confirmEditClick()">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Model Title</h4>
+        </div>
+        <div *ngIf="userEvent" class="modal-body">
+          <div>
+            <label for="editTitle">Title: </label>
+            <input id="editTitle" class="form-control" value="{{userEvent.title}}" formControlName="title" name="title">
+          </div>
+          <div>
+            <label for="editDescription">Description: </label>
+            <input id="editDescription" class="form-control" formControlName="description" name="description" value="{{userEvent.description}}">
+          </div>
+          <div>
+            <label for="editDate">Date: </label>
+            <input id="editDate" type="date" class="form-control" formControlName="date" name="date" value="{{userEvent.date}}">
+          </div>
+        </div>
+        <div  *ngFor="let invitedAccount of invitedAccounts" >
+          <button type="button" class="btn btn-danger"  id="invited" (click)="editInviteList($event)" value="{{invitedAccount.email}}">Remove Invite</button>
+          <label class="form-check-label" for="invited">
+            {{invitedAccount.firstName}}
+          </label>
+        </div>
+        <div *ngIf="otherAccounts.length > 0">
+          <div *ngFor="let otherAccount of otherAccounts" >
+            <button type="button" (click)="editInviteList($event)" class="btn btn-success" value="{{otherAccount.email}}" id="notInvited">Add to event</button>
+            <label class="form-check-label" for="notInvited">
+              {{otherAccount.firstName}}
+            </label>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-default">Confirm Edits</button>
+          <button type="button" (click)="cancelEdit()" class="btn btn-default" value="cancel">Cancel</button>
+        </div>
+      </div>
+    </div>
+    </form>
+  </div>
+
+</div>
+
+    <button (click)="stopViewingDetails()" class="btn btn-primary m-1">Stop viewing</button>
   </div>
   </div>
 </div>

@@ -22,5 +22,28 @@
       "password": "dan"
     }
   ],
-  "events": []
+  "events": [
+    {
+      "id": "7b5bd404-5779-4167-bfdc-d3f2c0faa8c7",
+      "createdBy": {
+        "id": "92a5110c-208c-4da1-9fa0-64280b323713",
+        "firstName": "Owen",
+        "lastName": "Carruth",
+        "email": "ocarr199@gmail.com",
+        "password": "1234"
+      },
+      "title": "cool",
+      "date": "2022-10-31",
+      "description": "dude",
+      "invitedAccounts": [
+        {
+          "id": "4099d93a-ec1f-4b86-8a1a-8b658901c8c6",
+          "firstName": "Dan",
+          "lastName": "Danielson",
+          "email": "dan@twins.com",
+          "password": "dan"
+        }
+      ]
+    }
+  ]
 }

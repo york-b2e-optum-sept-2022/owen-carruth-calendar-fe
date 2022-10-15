@@ -42,4 +42,8 @@ export class HttpService {
   deleteEvent(eventID: string) {
     return this.httpClient.delete(`http://localhost:3000/events/${eventID}`)
   }
+
+  editEvent(editedEvent: IEvent) {
+    return this.httpClient.put(`http://localhost:3000/events/${editedEvent.id}`, editedEvent)
+  }
 }
