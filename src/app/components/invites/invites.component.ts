@@ -24,4 +24,7 @@ export class InvitesComponent implements OnInit {
 
   }
 
+  removeInvite() {
+    this.eventService.removeInvite(this.invite, this.user)
+  }
 }

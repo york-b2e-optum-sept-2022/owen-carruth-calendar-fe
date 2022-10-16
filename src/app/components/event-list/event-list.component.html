@@ -1,4 +1,5 @@
 <button class="btn btn-primary" routerLink="/NewEvent">New Event</button>
+<button (click)="logout()"> Log Out</button>
 <div class="d-flex justify-content-around">
   <div>
     <div class="m-2">
@@ -14,6 +15,10 @@
       {{event.title}}
     </app-event>
   </div>
+  <div class="m-2">
+    <input #inviteDate1 type="date" placeholder="Start date">
+    <input #inviterDate2 type="date" placeholder="End date">
+    <button (click)="myInvitesDatePicker(inviteDate1, inviterDate2)" class="btn btn-primary m-1">Set date range</button>
 
   <app-invites
     *ngFor="let invite of myInvites"
@@ -21,6 +26,7 @@
   >
 
   </app-invites>
+  </div>
 </div>
 
 

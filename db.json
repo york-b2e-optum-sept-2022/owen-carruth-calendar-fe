@@ -35,15 +35,7 @@
       "title": "cool",
       "date": "2022-10-31",
       "description": "dude",
-      "invitedAccounts": [
-        {
-          "id": "4099d93a-ec1f-4b86-8a1a-8b658901c8c6",
-          "firstName": "Dan",
-          "lastName": "Danielson",
-          "email": "dan@twins.com",
-          "password": "dan"
-        }
-      ]
+      "invitedAccounts": []
     },
     {
       "id": "8b5bd404-5779-4167-bfdc-d3f2c0faa8c7",
@@ -57,15 +49,7 @@
       "title": "I AM NOT INVITED",
       "date": "2022-10-31",
       "description": "dude",
-      "invitedAccounts": [
-        {
-          "id": "f202ffa6-cbbb-47d2-a2e9-096b2455d005",
-          "firstName": "byron",
-          "lastName": "buxton",
-          "email": "byron@twins.com",
-          "password": "twins"
-        }
-      ]
+      "invitedAccounts": []
     },
     {
       "id": "7b5bd404-5779-4167-bfdc-d3f2c0faa8c7",
@@ -144,6 +128,28 @@
       "date": "2022-06-15",
       "description": "",
       "invitedAccounts": []
+    },
+    {
+      "id": "5979782a-45b3-4cbd-b730-42da73626888",
+      "createdBy": {
+        "id": "f202ffa6-cbbb-47d2-a2e9-096b2455d005",
+        "firstName": "byron",
+        "lastName": "buxton",
+        "email": "byron@twins.com",
+        "password": "twins"
+      },
+      "title": "you should be invited",
+      "date": "2022-10-18",
+      "description": "sfghgfdhdfgh",
+      "invitedAccounts": [
+        {
+          "id": "92a5110c-208c-4da1-9fa0-64280b323713",
+          "firstName": "Owen",
+          "lastName": "Carruth",
+          "email": "ocarr199@gmail.com",
+          "password": "1234"
+        }
+      ]
     }
   ]
 }

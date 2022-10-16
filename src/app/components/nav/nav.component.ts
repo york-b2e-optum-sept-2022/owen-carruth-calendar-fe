@@ -7,11 +7,15 @@ import {IAccount} from "../../interfaces/IAccount";
   styleUrls: ['./nav.component.css']
 })
 export class NavComponent implements OnInit {
-  account: IAccount | null = null;
+  user: IAccount | null = null;
 
-  constructor() { }
+  constructor() {
+
+  }
 
   ngOnInit(): void {
+
   }
+
 
 }

@@ -50,4 +50,8 @@ export class HttpService {
   getInvites(user: IAccount) {
     return this.httpClient.get(`http://localhost:3000/events?createdBy.id_ne=${user.id}`) as Observable<IEvent[]>
   }
+
+  editInvite(invite: IEvent) {
+    return this.httpClient.put(`http://localhost:3000/events/${invite.id}`, invite)
+  }
 }

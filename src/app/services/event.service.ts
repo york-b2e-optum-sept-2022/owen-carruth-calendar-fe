@@ -146,9 +146,34 @@ export class EventService {
   getMyInvites(user: IAccount) {
     this.httpService.getInvites(user).pipe(first()).subscribe({
       next: events => {
-       const myInvites = events.filter(event => event.invitedAccounts.every(acc => acc.id === user.id))
+        console.log(events)
+       const myInvites = events.filter(event => {
+         console.log(event.invitedAccounts.length)
+         if(event.invitedAccounts.length > 0){
+           return event.invitedAccounts.every(acc => {
+             console.log()
+             console.log(acc.id === user.id)
+             return acc.id === user.id
+           })
+         }
+         return false
+
+         }
+       )
         console.log(myInvites)
         this.$myInvites.next(myInvites)
+      }
+    })
+  }
+
+  removeInvite(invite: IEvent, user: IAccount) {
+    console.log(invite)
+    console.log(user)
+    invite.invitedAccounts = invite.invitedAccounts.filter(acc => acc.id !== user.id)
+    this.httpService.editInvite(invite).pipe(first()).subscribe({
+      next: value => {
+        console.log(value)
+        this.getMyInvites(user)
       }
     })
   }
