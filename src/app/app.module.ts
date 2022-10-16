@@ -9,7 +9,8 @@ import { EventComponent } from './components/event/event.component';
 import { EventListComponent } from './components/event-list/event-list.component';
 import {AppRoutingModule, routingComponents} from './app-routing.module';
 import { EventFormComponent } from './components/event-form/event-form.component';
-import { InvitesComponent } from './components/invites/invites.component'
+import { InvitesComponent } from './components/invites/invites.component';
+
 
 @NgModule({
   declarations: [
@@ -17,7 +18,7 @@ import { InvitesComponent } from './components/invites/invites.component'
     routingComponents,
     NavComponent,
     EventComponent,
-    InvitesComponent
+    InvitesComponent,
   ],
   imports: [
     BrowserModule,

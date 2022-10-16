@@ -1,35 +1,45 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {IEvent} from "../../interfaces/IEvent";
+import { Component, OnInit } from '@angular/core';
 import {EventService} from "../../services/event.service";
-import {IAccount} from "../../interfaces/IAccount";
-import {AccountService} from "../../services/account.service";
+import {IEvent} from "../../interfaces/IEvent";
 import {first} from "rxjs";
+import {AccountService} from "../../services/account.service";
+import {IAccount} from "../../interfaces/IAccount";
 import {FormBuilder, FormGroup} from "@angular/forms";
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
-  selector: 'app-event',
-  templateUrl: './event.component.html',
-  styleUrls: ['./event.component.css']
+  selector: 'app-event-details',
+  templateUrl: './event-details.component.html',
+  styleUrls: ['./event-details.component.css']
 })
-export class EventComponent implements OnInit {
+export class EventDetailsComponent implements OnInit {
 
-  @Input() userEvent!: IEvent;
-  viewingDetails: boolean = false;
+  userEvent!: IEvent;
   user: IAccount
   display = "none";
   invitedAccounts: IAccount[] = []
   otherAccounts: IAccount[] = [];
+
   editForm!: FormGroup;
-  isEditing: boolean = false;
 
-  constructor(private eventService: EventService, private accountService: AccountService, private formBuilder:FormBuilder) {
+  constructor(private eventService: EventService, private accountService: AccountService,private formBuilder:FormBuilder, private route: ActivatedRoute) {
     this.user = JSON.parse(sessionStorage['user']) as IAccount
-    console.log(this.userEvent)
-
+    this.eventService.$currentEvent.subscribe({
+      next: value => {
+        this.userEvent = value
+        console.log(this.userEvent)
+      }
+    })
   }
 
   ngOnInit(): void {
-    this.invitedAccounts = this.userEvent.invitedAccounts
+    console.log(this.userEvent)
+    if(this.userEvent.invitedAccounts.length > 0){
+      this.invitedAccounts = this.userEvent.invitedAccounts
+    }else{
+
+    }
+
     console.log(this.userEvent.invitedAccounts)
     this.editForm = this.formBuilder.group({
       title: [this.userEvent.title],
@@ -38,30 +48,7 @@ export class EventComponent implements OnInit {
     })
   }
 
-  viewDetails(userEvent: IEvent) {
-    console.log(this.userEvent)
-    // this.eventService.getEventDetails(this.userEvent)
-    //TODO DELETE IF GOING BACK TO OTHER WAY
-    this.display = "block";
-
-    this.viewingDetails = true;
-  }
-
-  deleteEvent() {
-    if (this.userEvent.createdBy.id === this.user.id) {
-      this.eventService.deleteEvent(this.userEvent)
-    } else {
-      alert("unauthorized to delete account")
-    }
-  }
-
-  stopViewingDetails() {
-    this.viewingDetails = false;
-    this.display = "none";
-  }
-
   editEventClick() {
-    this.isEditing = true;
     this.accountService.getAccounts(this.user)
     this.eventService.editEventClick(this.userEvent.invitedAccounts)
     this.otherAccounts = this.eventService.otherAccounts
@@ -83,6 +70,7 @@ export class EventComponent implements OnInit {
     this.eventService.$invitedAccounts.pipe(first()).subscribe({
       next: value => this.invitedAccounts = value
     })
+    this.userEvent.invitedAccounts = this.userEvent.invitedAccounts
     // console.log(this.userEvent.invitedAccounts)
   }
 
@@ -99,19 +87,26 @@ export class EventComponent implements OnInit {
     this.userEvent.invitedAccounts = this.invitedAccounts
 
     this.eventService.submitEdit(this.userEvent)
-    this.isEditing = false;
+    this.display = "none";
   }
   cancelEdit(){
-    console.log(this.invitedAccounts)
     this.editForm = this.formBuilder.group({
       title: [this.userEvent.title],
       description:[this.userEvent.description],
       date:[this.userEvent.date]
     })
-    this.invitedAccounts = this.userEvent.invitedAccounts
-    this.isEditing = false;
+
+    this.display = "none";
   }
 
 
+  deleteEvent() {
+    if (this.userEvent.createdBy.id === this.user.id) {
+      this.eventService.deleteEvent(this.userEvent)
+    } else {
+      // TODO improve way of telling user the cant delete
+      alert("unauthorized to delete account")
+    }
+  }
 
 }

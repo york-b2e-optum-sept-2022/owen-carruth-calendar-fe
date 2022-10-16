@@ -25,6 +25,7 @@ export class EventService {
 
   $myInvites = new Subject<IEvent[]>();
 
+  $currentEvent = new Subject<IEvent>();
 
   constructor(private httpService: HttpService, private accountService: AccountService) { }
 
@@ -177,4 +178,5 @@ export class EventService {
       }
     })
   }
+
 }
