@@ -19,10 +19,14 @@ export class EventFormComponent implements OnInit {
   otherAccounts: IAccount[] | null = null;
   invitedEmails: string[] = [];
   $componentDestroyed: Subject<boolean> = new Subject()
-
+  createEventError: string = '';
+  createInviteListError: string = '';
   constructor(private accountService: AccountService, private eventService: EventService, private router: Router) {
     this.user = JSON.parse(sessionStorage['user']) as IAccount
-
+      this.eventService.$addInvitesError.pipe(takeUntil(this.$componentDestroyed)).subscribe({
+        next: err => this.createInviteListError = err
+        }
+      )
   }
 
   ngOnInit(): void {
@@ -61,7 +65,7 @@ console.log(formData)
   this.eventService.$eventCreated.pipe(takeUntil(this.$componentDestroyed)).subscribe({
     next: value => {if(value){
       this.router.navigate(['/events'])
-    }}
+    }}, error : err => this.createEventError = err
   })
 }
 

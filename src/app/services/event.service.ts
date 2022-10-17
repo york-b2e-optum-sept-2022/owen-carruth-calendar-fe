@@ -27,6 +27,13 @@ export class EventService {
 
   $currentEvent = new Subject<IEvent>();
 
+  $creatEventError = new Subject<string>();
+  $addInvitesError = new Subject<string>();
+  $getEventsError = new Subject<string>();
+  $deleteEventError= new Subject<string>();
+  $editEventError = new Subject<string>()
+  $getInvitesError = new Subject<string>()
+  $rejectInviteError = new Subject<string>()
   constructor(private httpService: HttpService, private accountService: AccountService) { }
 
   createInviteList(selected: Event) {
@@ -57,7 +64,8 @@ export class EventService {
           console.log(account)
           this.invitedAccounts.push(account[0])
           console.log(this.invitedAccounts)
-        }
+        },
+        error: err => this.$addInvitesError.next('Unable to add invites to event')
       })
     }
   }
@@ -74,7 +82,7 @@ export class EventService {
       invitedAccounts: this.invitedAccounts
     }).pipe(first()).subscribe({
       next: event => this.$eventCreated.next(event),
-      error: err => console.log(err)
+      error: err => this.$creatEventError.next('Unable to create event')
     })
   }
 
@@ -82,8 +90,8 @@ export class EventService {
     this.httpService.getEvents(userID).pipe(first()).subscribe({
       next: myEventList =>{
         this.$myEvents.next(myEventList)
-      }
-
+      },
+      error: err => this.$getEventsError.next('Unable to get your events')
     })
 
   }
@@ -92,9 +100,8 @@ export class EventService {
     console.log(event)
     this.httpService.deleteEvent(event.id).pipe(first()).subscribe({
       next: value => { this.getMyEvents(event.createdBy.id)
-
-
-      }
+      },
+      error: err => this.$deleteEventError.next('unable to delete event')
     })
   }
 
@@ -140,7 +147,8 @@ export class EventService {
 
   submitEdit(userEvent: IEvent) {
     this.httpService.editEvent(userEvent).pipe(first()).subscribe({
-        next: value => console.log(value)
+        next: value => console.log(value),
+        error: err => this.$editEventError.next('Error editing event')
     })
   }
 
@@ -163,7 +171,8 @@ export class EventService {
        )
         console.log(myInvites)
         this.$myInvites.next(myInvites)
-      }
+      },
+      error: err => this.$getInvitesError.next('Unable to get your invites')
     })
   }
 
@@ -175,7 +184,7 @@ export class EventService {
       next: value => {
         console.log(value)
         this.getMyInvites(user)
-      }
+      }, error: err => this.$rejectInviteError.next('Error rejecting invite')
     })
   }
 

@@ -1,15 +1,15 @@
 <div class="d-flex flex-column w-50 m-3">
   <h1 class="display-1">Welcome To Event Master</h1>
-  <h5 class="display-6"> Login to start planning your events</h5>
+  <h5 class="display-6"> Register to start planning your events</h5>
   <p class="text-danger">{{registerError}}</p>
   <form #registerForm="ngForm" (ngSubmit)="onRegister(registerForm.value)" >
     <div class="form-group w-50">
       <label for="exampleInputEmail1">First Name</label>
-      <input type="email" name="firstName" ngModel class="form-control"  aria-describedby="emailHelp" placeholder="Enter email">
+      <input type="email" name="firstName" ngModel class="form-control"  aria-describedby="emailHelp" placeholder="Enter first name">
     </div>
     <div class="form-group w-50">
       <label for="exampleInputEmail1">Last Name</label>
-      <input type="email" name="lastName" ngModel class="form-control" aria-describedby="emailHelp" placeholder="Enter email">
+      <input type="email" name="lastName" ngModel class="form-control" aria-describedby="emailHelp" placeholder="Enter last name">
     </div>
     <div class="form-group w-50">
       <label for="exampleInputEmail1">Email address</label>
@@ -17,8 +17,7 @@
     </div>
     <div class="form-group w-50">
       <label for="exampleInputEmail1">Password</label>
-      <input type="email" name="password" ngModel class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
-      <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+      <input type="email" name="password" ngModel class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter password">
     </div>
     <div class="form-group w-50">
       <label for="exampleInputPassword1">Confirm Password</label>

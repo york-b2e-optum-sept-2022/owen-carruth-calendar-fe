@@ -3,7 +3,7 @@ import {IEvent} from "../../interfaces/IEvent";
 import {EventService} from "../../services/event.service";
 import {IAccount} from "../../interfaces/IAccount";
 import {AccountService} from "../../services/account.service";
-import {first} from "rxjs";
+import {first, Subject, takeUntil} from "rxjs";
 import {FormBuilder, FormGroup} from "@angular/forms";
 
 @Component({
@@ -21,10 +21,15 @@ export class EventComponent implements OnInit {
   otherAccounts: IAccount[] = [];
   editForm!: FormGroup;
   isEditing: boolean = false;
+  $componentDestroyed: Subject<boolean> = new Subject()
+  eventError: string = ''
 
   constructor(private eventService: EventService, private accountService: AccountService, private formBuilder:FormBuilder) {
     this.user = JSON.parse(sessionStorage['user']) as IAccount
     console.log(this.userEvent)
+    this.eventService.$editEventError.pipe(takeUntil(this.$componentDestroyed)).subscribe({
+      next: err => this.eventError = err
+    })
 
   }
 
@@ -38,12 +43,9 @@ export class EventComponent implements OnInit {
     })
   }
 
-  viewDetails(userEvent: IEvent) {
+  viewDetails() {
     console.log(this.userEvent)
-    // this.eventService.getEventDetails(this.userEvent)
-    //TODO DELETE IF GOING BACK TO OTHER WAY
     this.display = "block";
-
     this.viewingDetails = true;
   }
 
@@ -110,6 +112,11 @@ export class EventComponent implements OnInit {
     })
     this.invitedAccounts = this.userEvent.invitedAccounts
     this.isEditing = false;
+  }
+
+  ngOnDestroy(){
+    this.$componentDestroyed.next(true)
+    this.$componentDestroyed.complete()
   }
 
 

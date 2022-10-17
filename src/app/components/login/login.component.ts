@@ -17,37 +17,35 @@ export class LoginComponent implements OnInit {
  loginSuccess: boolean = false;
   $componentDestroyed: Subject<boolean> = new Subject()
   constructor(private accountService: AccountService, private router: Router) {
-      this.accountService.$loginError.pipe().subscribe({
+      this.accountService.$loginError.pipe(takeUntil(this.$componentDestroyed)).subscribe({
         next: loginError => this.loginError = loginError
       })
-
-
   }
 
   ngOnInit(): void {
 
   }
 
-  ngOnDestroy() {
-    this.$componentDestroyed.next(true)
-    this.$componentDestroyed.complete()
-  }
+
 
   onLogin(loginCreds: ILoginForm) {
     console.log(loginCreds)
     this.accountService.login(loginCreds)
 
-    this.accountService.$account.pipe(first()).subscribe({
+    this.accountService.$account.pipe(takeUntil(this.$componentDestroyed)).subscribe({
       next: account => {
         console.log(account)
         this.loginSuccess = !!account
         if(this.loginSuccess){
           this.router.navigate(['/events'])
         }
-      }
+      },
+      error: err =>  this.loginError = err
     })
-
-
   }
 
+  ngOnDestroy() {
+    this.$componentDestroyed.next(true)
+    this.$componentDestroyed.complete()
+  }
 }

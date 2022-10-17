@@ -3,15 +3,8 @@
   <div class="card-body">
     <h5 class="card-title">{{userEvent.title}}</h5>
     <div>
-      <button (click)="viewDetails(userEvent)" class="btn btn-primary">View Event</button>
+      <button (click)="viewDetails()" class="btn btn-primary">View Event</button>
     </div>
-<!--  <div *ngIf="viewingDetails">-->
-<!--    <p>{{userEvent.date | date}}</p>-->
-<!--    <p>{{userEvent.description}}</p>-->
-<!--    <div *ngFor="let account of userEvent.invitedAccounts">-->
-<!--      {{account.firstName}}-->
-<!--    </div>-->
-
 
 
   <div class="modal" tabindex="-1" role="dialog" *ngIf="viewDetails"  [ngStyle]="{'display':display}">
@@ -22,6 +15,7 @@
         </div>
         <div class="modal-body">
           <div>
+            <p *ngIf="eventError.length > 1" class="text-danger">{{eventError}}</p>
             <label>
               <h5>Description:</h5>
             <p>{{userEvent.description}}</p>

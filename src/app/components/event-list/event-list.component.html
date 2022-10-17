@@ -1,5 +1,11 @@
 <div class="d-flex justify-content-between">
   <button class="btn btn-primary m-2" routerLink="/NewEvent">New Event</button>
+  <div *ngIf="eventListError.length > 1" class="alert alert-danger" role="alert">
+    {{eventListError}}
+  </div>
+  <div *ngIf="inviteError.length > 1" class="alert alert-danger" role="alert">
+    {{inviteError}}
+  </div>
   <button class="btn btn-danger m-2" (click)="logout()"> Log Out</button>
 </div>
 
@@ -10,13 +16,12 @@
       <input #date2 type="date" placeholder="End date">
       <button (click)="myEventsDatePicker(date1, date2)" class="btn btn-primary m-1">Set date range</button>
     </div>
-
-    <app-event
-      *ngFor="let event of myEvents"
-      [userEvent]="event"
-    >
-      {{event.title}}
-    </app-event>
+      <app-event
+        *ngFor="let event of myEvents"
+        [userEvent]="event"
+      >
+        {{event.title}}
+      </app-event>
   </div>
   <div class="m-2">
     <input #inviteDate1 type="date" placeholder="Start date">

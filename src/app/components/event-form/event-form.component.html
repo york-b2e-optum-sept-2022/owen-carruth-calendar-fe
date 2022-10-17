@@ -40,6 +40,7 @@
     </div>
     <button  type="submit" class="btn btn-primary m-2">Create Event</button>
   </form>
+  <p class="text-danger" *ngIf="createInviteListError.length > 1">{{createInviteListError}}</p>
 </div>
 
 <!--<button type="button" class="btn btn-primary" (click)="getAccounts()">Invite Friends</button>-->

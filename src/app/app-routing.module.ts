@@ -5,7 +5,7 @@ import {RegisterComponent} from "./components/register/register.component";
 import {EventListComponent} from "./components/event-list/event-list.component";
 import {EventFormComponent} from "./components/event-form/event-form.component";
 import {EventComponent} from "./components/event/event.component";
-import {EventDetailsComponent} from "./components/event-details/event-details.component";
+
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
@@ -13,7 +13,7 @@ const routes: Routes = [
   {path: 'register', component: RegisterComponent},
   {path: 'events', component: EventListComponent},
   {path: 'NewEvent', component: EventFormComponent},
-  {path: 'events/:id', component: EventDetailsComponent}
+
 ]
 
 @NgModule({
@@ -23,4 +23,4 @@ const routes: Routes = [
 export class AppRoutingModule {
 
 }
-export const routingComponents = [LoginComponent, RegisterComponent, EventListComponent, EventFormComponent, EventComponent, EventDetailsComponent]
+export const routingComponents = [LoginComponent, RegisterComponent, EventListComponent, EventFormComponent, EventComponent]

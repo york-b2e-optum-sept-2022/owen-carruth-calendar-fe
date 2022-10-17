@@ -42,13 +42,16 @@ export class AccountService {
       return
     }
 
+    console.log('got past if statements')
+
     this.httpService.findAccountByEmail(loginCreds.email).pipe(first()).subscribe({
       next: returnedAccounts => {
         const validAccount = returnedAccounts.find(
-          account => account.password === loginCreds.password
+           account => account.password === loginCreds.password
         )
         if (!validAccount) {
           this.$loginError.next("Invalid login, try again");
+          console.log(validAccount)
           return;
         }
        localStorage.setItem("account", `${validAccount}`)
@@ -78,7 +81,6 @@ export class AccountService {
     console.log(registrationData)
     if (registrationData.firstName.length < 1){
       this.$registerError.next("Please enter a first name");
-
       return;
     }
     if (registrationData.lastName.length < 1){
@@ -120,7 +122,14 @@ export class AccountService {
     }
     ).pipe(first())
       .subscribe({
-        next: newAccount => this.$account.next(newAccount)
+        next: newAccount => {
+          console.log(newAccount)
+          sessionStorage.setItem('user', JSON.stringify(newAccount))
+          return this.$account.next(newAccount)
+        },  error: (err) => {
+          console.error(err);
+          this.$registerError.next("Unable to Register, try again later")
+        }
       })
   }
 }

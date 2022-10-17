@@ -18,17 +18,40 @@ export class EventListComponent implements OnInit {
   myInvites: IEvent[] = [];
   $componentDestroyed: Subject<boolean> = new Subject()
   account: IAccount | null = null;
+  eventListError: string = '';
+  inviteError: string = ''
   constructor(private accountService: AccountService, private eventService: EventService, private router: Router) {
     this.user = JSON.parse(sessionStorage['user']) as IAccount
     this.eventService.getMyEvents(this.user.id)
     this.eventService.getMyInvites(this.user)
 
+    this.eventService.$getEventsError.pipe(takeUntil(this.$componentDestroyed)).subscribe({
+      next: err => this.eventListError = err
+    })
+    this.eventService.$creatEventError.pipe(takeUntil(this.$componentDestroyed)).subscribe({
+      next: err => this.eventListError = err
+    })
+    this.eventService.$deleteEventError.pipe(takeUntil(this.$componentDestroyed)).subscribe({
+      next: err => this.eventListError = err
+    })
+    this.eventService.$deleteEventError.pipe(takeUntil(this.$componentDestroyed)).subscribe({
+      next: err => this.eventListError = err
+    })
+    this.eventService.$getInvitesError.pipe(takeUntil(this.$componentDestroyed)).subscribe({
+      next: err => this.inviteError = err
+    })
+    this.eventService.$rejectInviteError.pipe(takeUntil(this.$componentDestroyed)).subscribe({
+      next: err => this.inviteError = err
+    })
+
   }
 
   ngOnInit(): void {
     this.eventService.$myEvents.pipe(takeUntil(this.$componentDestroyed)).subscribe({
-      next: value => this.myEvents = value
-    })
+      next: value => this.myEvents = value,
+      error: err => this.eventListError = err
+    }
+    )
     this.eventService.$myInvites.pipe(takeUntil(this.$componentDestroyed)).subscribe({
       next: value => {
         this.myInvites = value

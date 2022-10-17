@@ -36,11 +36,14 @@ export class RegisterComponent implements OnInit {
 
     this.accountService.$account.pipe(takeUntil(this.$componentDestroyed)).subscribe({
       next: account => {
+        console.log(account)
         this.registerSuccess = !!account
         if(this.registerSuccess){
+          console.log(this.registerSuccess)
           this.router.navigate(['/events'])
         }
-      }
+      },
+      error: err => this.registerError = err
     })
 
   }
