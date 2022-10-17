@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ILoginForm} from "../../interfaces/ILoginForm";
 import {NgForm} from "@angular/forms";
 import {AccountService} from "../../services/account.service";
@@ -13,20 +13,19 @@ import {first, Subject, takeUntil} from "rxjs";
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
- loginError: string | null = null;
- loginSuccess: boolean = false;
+  loginError: string | null = null;
+  loginSuccess: boolean = false;
   $componentDestroyed: Subject<boolean> = new Subject()
+
   constructor(private accountService: AccountService, private router: Router) {
-      this.accountService.$loginError.pipe(takeUntil(this.$componentDestroyed)).subscribe({
-        next: loginError => this.loginError = loginError
-      })
+    this.accountService.$loginError.pipe(takeUntil(this.$componentDestroyed)).subscribe({
+      next: loginError => this.loginError = loginError
+    })
   }
 
   ngOnInit(): void {
 
   }
-
-
 
   onLogin(loginCreds: ILoginForm) {
     console.log(loginCreds)
@@ -36,11 +35,11 @@ export class LoginComponent implements OnInit {
       next: account => {
         console.log(account)
         this.loginSuccess = !!account
-        if(this.loginSuccess){
+        if (this.loginSuccess) {
           this.router.navigate(['/events'])
         }
       },
-      error: err =>  this.loginError = err
+      error: err => this.loginError = err
     })
   }
 

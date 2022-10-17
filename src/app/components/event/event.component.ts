@@ -24,7 +24,7 @@ export class EventComponent implements OnInit {
   $componentDestroyed: Subject<boolean> = new Subject()
   eventError: string = ''
 
-  constructor(private eventService: EventService, private accountService: AccountService, private formBuilder:FormBuilder) {
+  constructor(private eventService: EventService, private accountService: AccountService, private formBuilder: FormBuilder) {
     this.user = JSON.parse(sessionStorage['user']) as IAccount
     console.log(this.userEvent)
     this.eventService.$editEventError.pipe(takeUntil(this.$componentDestroyed)).subscribe({
@@ -38,8 +38,8 @@ export class EventComponent implements OnInit {
     console.log(this.userEvent.invitedAccounts)
     this.editForm = this.formBuilder.group({
       title: [this.userEvent.title],
-      description:[this.userEvent.description],
-      date:[this.userEvent.date]
+      description: [this.userEvent.description],
+      date: [this.userEvent.date]
     })
   }
 
@@ -70,7 +70,8 @@ export class EventComponent implements OnInit {
     this.eventService.$otherAccounts.pipe(first()).subscribe({
       next: value => {
         console.log(this.userEvent.invitedAccounts)
-        this.otherAccounts = value}
+        this.otherAccounts = value
+      }
     })
     console.log(this.userEvent.invitedAccounts)
     this.display = "block";
@@ -85,10 +86,9 @@ export class EventComponent implements OnInit {
     this.eventService.$invitedAccounts.pipe(first()).subscribe({
       next: value => this.invitedAccounts = value
     })
-    // console.log(this.userEvent.invitedAccounts)
   }
 
-  confirmEditClick(){
+  confirmEditClick() {
     console.log("CONFIRMATION CLICK RUNNING")
     console.log(this.userEvent.invitedAccounts)
     const editTitle = this.editForm.value.title
@@ -103,22 +103,22 @@ export class EventComponent implements OnInit {
     this.eventService.submitEdit(this.userEvent)
     this.isEditing = false;
   }
-  cancelEdit(){
+
+  cancelEdit() {
     console.log(this.invitedAccounts)
     this.editForm = this.formBuilder.group({
       title: [this.userEvent.title],
-      description:[this.userEvent.description],
-      date:[this.userEvent.date]
+      description: [this.userEvent.description],
+      date: [this.userEvent.date]
     })
     this.invitedAccounts = this.userEvent.invitedAccounts
     this.isEditing = false;
   }
 
-  ngOnDestroy(){
+  ngOnDestroy() {
     this.$componentDestroyed.next(true)
     this.$componentDestroyed.complete()
   }
-
 
 
 }

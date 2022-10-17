@@ -14,7 +14,6 @@ export class InvitesComponent implements OnInit {
 
   user: IAccount
 
-
   constructor(private eventService: EventService) {
     this.user = JSON.parse(sessionStorage['user']) as IAccount
 

@@ -16,24 +16,24 @@
       <input #date2 type="date" placeholder="End date">
       <button (click)="myEventsDatePicker(date1, date2)" class="btn btn-primary m-1">Set date range</button>
     </div>
-      <app-event
-        *ngFor="let event of myEvents"
-        [userEvent]="event"
-      >
-        {{event.title}}
-      </app-event>
+    <app-event
+      *ngFor="let event of myEvents"
+      [userEvent]="event"
+    >
+      {{event.title}}
+    </app-event>
   </div>
   <div class="m-2">
     <input #inviteDate1 type="date" placeholder="Start date">
     <input #inviterDate2 type="date" placeholder="End date">
     <button (click)="myInvitesDatePicker(inviteDate1, inviterDate2)" class="btn btn-primary m-1">Set date range</button>
 
-  <app-invites
-    *ngFor="let invite of myInvites"
-    [invite]="invite"
-  >
+    <app-invites
+      *ngFor="let invite of myInvites"
+      [invite]="invite"
+    >
 
-  </app-invites>
+    </app-invites>
   </div>
 </div>
 

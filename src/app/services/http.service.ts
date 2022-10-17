@@ -26,9 +26,6 @@ export class HttpService {
     return this.httpClient.get(`http://localhost:3000/accounts?email_ne=${email}`) as Observable<IAccount[]>
   }
 
-  getInviteList(item: string) {
-
-  }
 
   createEvent(newEvent: IEvent) {
     console.log(typeof newEvent.date)
@@ -55,7 +52,4 @@ export class HttpService {
     return this.httpClient.put(`http://localhost:3000/events/${invite.id}`, invite)
   }
 
-  getEventDetails(userEvent: IEvent) {
-    return this.httpClient.get(`http://localhost:3000/events?id=${userEvent.id}`) as Observable<IEvent[]>
-  }
 }

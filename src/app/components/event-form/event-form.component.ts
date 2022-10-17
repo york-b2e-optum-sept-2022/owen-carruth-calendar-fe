@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {AccountService} from "../../services/account.service";
 import {IAccount} from "../../interfaces/IAccount";
 import {EventService} from "../../services/event.service";
@@ -21,18 +21,19 @@ export class EventFormComponent implements OnInit {
   $componentDestroyed: Subject<boolean> = new Subject()
   createEventError: string = '';
   createInviteListError: string = '';
+
   constructor(private accountService: AccountService, private eventService: EventService, private router: Router) {
     this.user = JSON.parse(sessionStorage['user']) as IAccount
-      this.eventService.$addInvitesError.pipe(takeUntil(this.$componentDestroyed)).subscribe({
+    this.eventService.$addInvitesError.pipe(takeUntil(this.$componentDestroyed)).subscribe({
         next: err => this.createInviteListError = err
-        }
-      )
+      }
+    )
   }
 
   ngOnInit(): void {
   }
-  display = "none";
 
+  display = "none";
 
 
   onCloseHandled(event: Event) {
@@ -41,9 +42,10 @@ export class EventFormComponent implements OnInit {
 
     this.eventService.resetInviteList()
   }
-  getAccounts(){
 
-    if(this.user !== null){
+  getAccounts() {
+
+    if (this.user !== null) {
       this.accountService.getAccounts(this.user)
       this.accountService.$inviteList.subscribe({
         next: inviteList => {
@@ -58,16 +60,18 @@ export class EventFormComponent implements OnInit {
     this.display = "block";
   }
 
-createEvent(formData: IEventForm){
-  console.log(this.invitedEmails)
-console.log(formData)
-  this.eventService.createEvent(formData, this.user)
-  this.eventService.$eventCreated.pipe(takeUntil(this.$componentDestroyed)).subscribe({
-    next: value => {if(value){
-      this.router.navigate(['/events'])
-    }}, error : err => this.createEventError = err
-  })
-}
+  createEvent(formData: IEventForm) {
+    console.log(this.invitedEmails)
+    console.log(formData)
+    this.eventService.createEvent(formData, this.user)
+    this.eventService.$eventCreated.pipe(takeUntil(this.$componentDestroyed)).subscribe({
+      next: value => {
+        if (value) {
+          this.router.navigate(['/events'])
+        }
+      }, error: err => this.createEventError = err
+    })
+  }
 
 
   addInviteToEvent() {
@@ -80,7 +84,7 @@ console.log(formData)
     this.eventService.createInviteList(selected)
   }
 
-  ngOnDestroy(){
+  ngOnDestroy() {
     this.$componentDestroyed.next(true)
   }
 }
