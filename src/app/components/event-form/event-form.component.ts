@@ -40,7 +40,7 @@ export class EventFormComponent implements OnInit {
     this.display = "none";
     console.log(event)
 
-    this.eventService.resetInviteList()
+    // this.eventService.resetInviteList()
   }
 
   getAccounts() {
@@ -53,6 +53,7 @@ export class EventFormComponent implements OnInit {
         }
       })
     }
+    // Getting all accounts that aren't current user in order to make list of invitable accounts
     this.eventService.$invitedEmails.subscribe({
       next: accounts => this.invitedEmails = accounts
     })
@@ -60,6 +61,7 @@ export class EventFormComponent implements OnInit {
     this.display = "block";
   }
 
+  //submitting event to DB
   createEvent(formData: IEventForm) {
     console.log(this.invitedEmails)
     console.log(formData)
@@ -73,7 +75,7 @@ export class EventFormComponent implements OnInit {
     })
   }
 
-
+  //confirm adding invites to event
   addInviteToEvent() {
     this.eventService.addInvitesToEvent()
     this.display = "none";

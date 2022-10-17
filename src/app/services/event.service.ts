@@ -51,9 +51,9 @@ export class EventService {
       console.log(this.invitedEmails)
   }
 
-  resetInviteList() {
-
-  }
+  // resetInviteList() {
+  //
+  // }
 
   addInvitesToEvent() {
     this.$invitedEmails.next(this.invitedEmails)
@@ -85,7 +85,7 @@ export class EventService {
       error: err => this.$creatEventError.next('Unable to create event')
     })
   }
-
+  // for displaying events in event list
   getMyEvents(userID: string) {
     this.httpService.getEvents(userID).pipe(first()).subscribe({
       next: myEventList =>{
@@ -105,6 +105,7 @@ export class EventService {
     })
   }
 
+  // displays current invites and not invited accounts for when editing event
   editEventClick(invitedAccounts: IAccount[]){
     this.invitedAccounts = invitedAccounts
     this.accountService.$inviteList.pipe(first()).subscribe({
@@ -144,7 +145,7 @@ export class EventService {
     }
 
   }
-
+  // edits event in DB
   submitEdit(userEvent: IEvent) {
     this.httpService.editEvent(userEvent).pipe(first()).subscribe({
         next: value => console.log(value),
@@ -176,6 +177,7 @@ export class EventService {
     })
   }
 
+  // edits event invite list to remove current user
   removeInvite(invite: IEvent, user: IAccount) {
     console.log(invite)
     console.log(user)

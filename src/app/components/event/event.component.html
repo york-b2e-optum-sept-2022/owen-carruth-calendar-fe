@@ -6,7 +6,7 @@
       <button (click)="viewDetails()" class="btn btn-primary">View Event</button>
     </div>
 
-
+<!--Displays if looking at event details but not editing-->
     <div class="modal" tabindex="-1" role="dialog" *ngIf="viewDetails" [ngStyle]="{'display':display}">
       <div *ngIf="!isEditing" class="modal-dialog" role="document">
         <div class="modal-content">
@@ -46,7 +46,7 @@
         </div>
       </div>
 
-
+<!--displays if editing-->
       <form *ngIf="isEditing" [formGroup]="editForm" (ngSubmit)="confirmEditClick()">
         <div class="modal-dialog" role="document">
           <div class="modal-content">
